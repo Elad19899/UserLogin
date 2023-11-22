@@ -1,6 +1,7 @@
 package Tests;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -8,7 +9,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterTest;
 
 
       public class WebsiteLoginTest {
@@ -16,11 +16,12 @@ import org.testng.annotations.AfterTest;
         static WebDriver driver;
 
         @BeforeClass
-        public static void startSession() {
+        public static void startSession() throws InterruptedException {
             WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver();
             driver.manage().window().maximize();
             driver.get("http://the-internet.herokuapp.com/login");
+            Thread.sleep(3000);
         }
 
         @Test
@@ -50,10 +51,10 @@ import org.testng.annotations.AfterTest;
             }
         }
 
-        @AfterTest
-        public void tearDown() {
+        @AfterClass
+        public static void tearDown() throws InterruptedException {
             // Close the browser after the test execution, regardless of success or failure
-            driver.quit();
+            driver.close();
         }
     }
 
